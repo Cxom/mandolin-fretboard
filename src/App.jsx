@@ -1,7 +1,6 @@
 import './App.css';
+import SvgFretboard from './SvgFretboard';
 import TwoScene from './TwoScene';
-
-
 
 function KeySelectorButtons() {
   return (
@@ -20,6 +19,7 @@ function App() {
       <div className="two-scene-container">
         <TwoScene />
       </div>
+      <SvgFretboard />
     </>
   );
 }
