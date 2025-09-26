@@ -16,9 +16,6 @@ function App() {
   return (
     <>
       <KeySelectorButtons />
-      <div className="two-scene-container">
-        <TwoScene />
-      </div>
       <SvgFretboard />
     </>
   );
