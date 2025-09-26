@@ -10,3 +10,15 @@ Currently, two official plugins are available:
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+
+## Feature List
+- Choose a key center
+- Choose scale degrees to show (or load a scale type preset)
+- Choose whether to show scale degrees, note names, or both. Adjust enharmonic notation preferences if chromatic
+- Customize the presentation of the scale degrees
+- Choose a hand position for a narrower view
+- If using a scale preset, choose a chord from the scale to highlight those notes
+- Program in a chord sequence (and tempo) to highlight for
+- Animate movements like enclosures

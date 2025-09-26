@@ -66,6 +66,9 @@
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   cursor: pointer;
   transition: background 0.2s;
+  font-family: 'Josefin Sans', Arial, Helvetica, sans-serif;
+  font-weight: 800;
+  font-size: 1.5em;
 }
 .key-selector-btn:hover {
   background: #e0e0e0;

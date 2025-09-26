@@ -1,8 +1,22 @@
 import React from 'react';
 
 type DisplayOptions = Record<string, never>;
+type ChromaticNotes = {
+  C: boolean;
+  CSharp: boolean;
+  D: boolean;
+  DSharp: boolean;
+  E: boolean;
+  F: boolean;
+  FSharp: boolean;
+  G: boolean;
+  GSharp: boolean;
+  A: boolean;
+  ASharp: boolean;
+  B: boolean;
+};
 type SvgFretboardProps = {
-  notes?: boolean[];
+  notes?: ChromaticNotes;
   displayOptions?: DisplayOptions;
 };
 
@@ -15,7 +29,23 @@ const HORIZONTAL_GAP = 50;
 const VERTICAL_GAP = 75;
 const NUT_FRET_BUFFER = 5;
 
-function SvgFretboard({ notes = Array(12).fill(false), displayOptions = {} }: SvgFretboardProps) {
+function SvgFretboard({
+  notes = {
+    C: false,
+    CSharp: false,
+    D: false,
+    DSharp: false,
+    E: false,
+    F: false,
+    FSharp: false,
+    G: false,
+    GSharp: false,
+    A: false,
+    ASharp: false,
+    B: false,
+  },
+  displayOptions = {},
+}: SvgFretboardProps) {
   return (
     <svg
       width={SVG_WIDTH}
@@ -25,18 +55,20 @@ function SvgFretboard({ notes = Array(12).fill(false), displayOptions = {} }: Sv
       {strings()}
       {nut()}
       {frets()}
-      {notesFn({ notes, displayOptions })}
+      {noteIndicators({ notes, displayOptions })}
     </svg>
   );
 }
 
-function notesFn({ notes, displayOptions }: { notes: boolean[]; displayOptions: DisplayOptions }) {
-  // For now, just render a circle for each true note
-  // Place circles at the top of the fretboard, spaced horizontally
-  return notes.map((active, i) =>
-    active ? (
+function noteIndicators({ notes, displayOptions }: { notes: ChromaticNotes; displayOptions: DisplayOptions }) {
+  // Chromatic scale order
+  const chromaticOrder = [
+    'C', 'CSharp', 'D', 'DSharp', 'E', 'F', 'FSharp', 'G', 'GSharp', 'A', 'ASharp', 'B'
+  ] as const;
+  return chromaticOrder.map((note, i) =>
+    notes[note] ? (
       <circle
-        key={`note-${i}`}
+        key={`note-${note}`}
         cx={(i + 1) * VERTICAL_GAP - VERTICAL_GAP / 2}
         cy={HORIZONTAL_START_Y - NUT_FRET_BUFFER - 12}
         r={12}
