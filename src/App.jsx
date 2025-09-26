@@ -5,16 +5,16 @@ import { useState } from 'react';
 
 const chromaticNotes = {
   C:        { color: '#FF0000', displayText: 'C' },
-  CSharp:   { color: '#FF7F00', displayText: <>{'C'}<sup>#</sup></> },
-  D:        { color: '#FFFF00', displayText: 'D' },
-  DSharp:   { color: '#00FF00', displayText: <>{'D'}<sup>#</sup></> },
+  CSharp:   { color: '#FF7F00', displayText: <>{'C'}#</> },
+  D:        { color: '#ffea00e3', displayText: 'D' },
+  DSharp:   { color: '#00FF00', displayText: <>{'D'}#</> },
   E:        { color: '#0000FF', displayText: 'E' },
   F:        { color: '#4B0082', displayText: 'F' },
-  FSharp:   { color: '#9400D3', displayText: <>{'F'}<sup>#</sup></> },
+  FSharp:   { color: '#9400D3', displayText: <>{'F'}#</> },
   G:        { color: '#00CED1', displayText: 'G' },
-  GSharp:   { color: '#FFD700', displayText: <>{'G'}<sup>#</sup></> },
+  GSharp:   { color: '#FFD700', displayText: <>{'G'}#</> },
   A:        { color: '#FF1493', displayText: 'A' },
-  ASharp:   { color: '#00FF7F', displayText: <>{'A'}<sup>#</sup></> },
+  ASharp:   { color: '#00FF7F', displayText: <>{'A'}#</> },
   B:        { color: '#8B4513', displayText: 'B' }
 };
 
@@ -29,7 +29,7 @@ function KeySelectorButtons({ selectedNote, setSelectedNote }) {
           style={{
             background: color,
             color: '#fff',
-            border: selectedNote === note ? '2px solid #222' : 'none'
+            border: selectedNote === note ? '5px solid #fff' : 'none'
           }}
         >
           {displayText}
