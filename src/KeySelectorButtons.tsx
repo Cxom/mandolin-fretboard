@@ -8,14 +8,14 @@ function KeySelectorButtons() {
   const { selectedTonic, setSelectedTonic } = useScaleContext()
   return (
     <div className="key-selector-buttons-container">
-      {Object.entries(chromaticNotes).map(([note, { color, displayText }]) => (
+      {chromaticNotes.map(({ name, color, displayText }) => (
         <button
-          key={note}
+          key={name}
           className="key-selector-btn"
-          onClick={() => setSelectedTonic(note)}
+          onClick={() => setSelectedTonic(name)}
           style={{
             background: color,
-            outline: selectedTonic === note ? '5px solid #fff' : 'none'
+            outline: selectedTonic === name ? '5px solid #fff' : 'none'
           }}
         >
           {displayText}

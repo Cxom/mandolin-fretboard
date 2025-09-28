@@ -1,19 +1,19 @@
-import {ScaleDegrees} from "./types";
+import {ChromaticNotes, ScaleDegrees} from "./types";
 
-export const chromaticNotes = {
-  C:        { color: '#FF0000', displayText: 'C' },
-  CSharp:   { color: '#FF7F00', displayText: <>{'C'}#</> },
-  D:        { color: '#FFEA00', displayText: 'D' },
-  DSharp:   { color: '#00FF00', displayText: <>{'D'}#</> },
-  E:        { color: '#0000FF', displayText: 'E' },
-  F:        { color: '#4B0082', displayText: 'F' },
-  FSharp:   { color: '#9400D3', displayText: <>{'F'}#</> },
-  G:        { color: '#00CED1', displayText: 'G' },
-  GSharp:   { color: '#FFD700', displayText: <>{'G'}#</> },
-  A:        { color: '#FF1493', displayText: 'A' },
-  ASharp:   { color: '#00FF7F', displayText: <>{'A'}#</> },
-  B:        { color: '#8B4513', displayText: 'B' }
-};
+export const chromaticNotes: { name: keyof ChromaticNotes, color: string, displayText: React.ReactNode }[] = [
+  { name: 'C',        color: '#FF0000', displayText: 'C' },
+  { name: 'CSharp',   color: '#FF7F00', displayText: <>{'C'}#</> },
+  { name: 'D',        color: '#FFEA00', displayText: 'D' },
+  { name: 'DSharp',   color: '#00FF00', displayText: <>{'D'}#</> },
+  { name: 'E',        color: '#0000FF', displayText: 'E' },
+  { name: 'F',        color: '#4B0082', displayText: 'F' },
+  { name: 'FSharp',   color: '#9400D3', displayText: <>{'F'}#</> },
+  { name: 'G',        color: '#00CED1', displayText: 'G' },
+  { name: 'GSharp',   color: '#FFD700', displayText: <>{'G'}#</> },
+  { name: 'A',        color: '#FF1493', displayText: 'A' },
+  { name: 'ASharp',   color: '#00FF7F', displayText: <>{'A'}#</> },
+  { name: 'B',        color: '#8B4513', displayText: 'B' }
+];
 
 export const scaleDegrees: { name: keyof ScaleDegrees, color: string }[] = [
   { name: '1', color: '#FF0000' },

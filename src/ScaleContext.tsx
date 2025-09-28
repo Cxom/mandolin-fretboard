@@ -50,7 +50,6 @@ function scaleReducer(state: ScaleState, action: ScaleAction): ScaleState {
     case 'setDegrees': {
       const newDegrees = { ...state.selectedDegrees, ...action.degrees };
       const scaleName = getScaleNameFromDegrees(newDegrees);
-      console.log("set degrees, new scale name:", scaleName);
       return { selectedScaleName: scaleName, selectedDegrees: newDegrees };
     }
     default:

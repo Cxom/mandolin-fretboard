@@ -1,5 +1,6 @@
 import React from 'react';
 import {ChromaticNotes} from "./types";
+import {chromaticNotes} from "./constants";
 
 type DisplayOptions = Record<string, never>;
 
@@ -49,15 +50,11 @@ function SvgFretboard({
 }
 
 function noteIndicators({ notes, displayOptions }: { notes: ChromaticNotes; displayOptions: DisplayOptions }) {
-  // Chromatic scale order
-  const chromaticOrder = [
-    'C', 'CSharp', 'D', 'DSharp', 'E', 'F', 'FSharp', 'G', 'GSharp', 'A', 'ASharp', 'B'
-  ] as const;
-  return chromaticOrder.map((note, i) =>
-    notes[note] ? (
+  return chromaticNotes.map(({name}, index) =>
+    notes[name] ? (
       <circle
-        key={`note-${note}`}
-        cx={(i + 1) * VERTICAL_GAP - VERTICAL_GAP / 2}
+        key={`note-${name}`}
+        cx={(index + 1) * VERTICAL_GAP - VERTICAL_GAP / 2}
         cy={HORIZONTAL_START_Y - NUT_FRET_BUFFER - 12}
         r={12}
         fill="#ffeb3b"
