@@ -1,7 +1,7 @@
 export const chromaticNotes = {
   C:        { color: '#FF0000', displayText: 'C' },
   CSharp:   { color: '#FF7F00', displayText: <>{'C'}#</> },
-  D:        { color: '#ffea00e3', displayText: 'D' },
+  D:        { color: '#FFEA00', displayText: 'D' },
   DSharp:   { color: '#00FF00', displayText: <>{'D'}#</> },
   E:        { color: '#0000FF', displayText: 'E' },
   F:        { color: '#4B0082', displayText: 'F' },
@@ -16,7 +16,7 @@ export const chromaticNotes = {
 export const scaleDegrees = [
   { name: '1', color: '#FF0000' },
   { name: 'b2', color: '#FF7F00' },
-  { name: '2', color: '#FFFF00' },
+  { name: '2', color: '#FFEA00' },
   { name: 'b3', color: '#00FF00' },
   { name: '3', color: '#0000FF' },
   { name: '4', color: '#4B0082' },

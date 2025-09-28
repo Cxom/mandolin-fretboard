@@ -1,11 +1,12 @@
 import React, {createContext, Dispatch, SetStateAction, useContext, useReducer} from 'react';
 import {scaleDegrees} from './constants.js';
+import {ScaleDegrees} from "./types";
 
 export interface ScaleContextType {
   selectedTonic: string;
   setSelectedTonic: Dispatch<SetStateAction<string>>;
-  selectedDegrees: Record<string, boolean>;
-  setSelectedDegrees: (degrees: Record<string, boolean>) => void;
+  selectedDegrees: ScaleDegrees;
+  setSelectedDegrees: (degrees: ScaleDegrees) => void;
   selectedScale: string;
   setSelectedScale: (scale: string) => void;
 }
@@ -24,21 +25,21 @@ function getScaleNameFromDegrees(degrees: Record<string, boolean>) {
   return 'custom';
 }
 
-function getDegreesFromScaleName(scaleName: string) {
+function getDegreesFromScaleName(scaleName: string) :ScaleDegrees {
   const pattern = scalePatterns[scaleName];
   return Object.fromEntries(
       scaleDegrees.map(({name}) => [name, pattern.some(p => p === name)])
-  );
+  ) as ScaleDegrees;
 }
 
 type ScaleState = {
-  selectedDegrees: Record<string, boolean>;
+  selectedDegrees: ScaleDegrees;
   selectedScaleName: string;
 };
 
 type ScaleAction =
   | { type: 'setScale'; scaleName: string }
-  | { type: 'setDegrees'; degrees: Record<string, boolean> };
+  | { type: 'setDegrees'; degrees: ScaleDegrees };
 
 function scaleReducer(state: ScaleState, action: ScaleAction): ScaleState {
   switch (action.type) {
@@ -74,7 +75,7 @@ export const ScaleContextProvider: React.FC<{ children: React.ReactNode }> = ({ 
   });
 
   const setSelectedScale = (scale: string) => dispatch({ type: 'setScale', scaleName: scale });
-  const setSelectedDegrees = (degrees: Record<string, boolean>) => dispatch({ type: 'setDegrees', degrees });
+  const setSelectedDegrees = (degrees: ScaleDegrees) => dispatch({ type: 'setDegrees', degrees });
 
   return (
     <ScaleContext.Provider value={{ selectedTonic, setSelectedTonic, selectedDegrees: state.selectedDegrees, setSelectedDegrees, selectedScale: state.selectedScaleName, setSelectedScale }}>

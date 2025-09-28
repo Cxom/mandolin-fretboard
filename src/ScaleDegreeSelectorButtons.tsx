@@ -25,8 +25,8 @@ function ScaleDegreeSelectorButtons() {
           onClick={() => handleToggle(name)}
           style={{
             background: color,
-            boxShadow: selectedDegrees[name] ? '0px 0px 5px 5px #fff' : 'none',
-            opacity: selectedDegrees[name] ? 1 : 0.6
+            boxShadow: selectedDegrees[name] ? '0px 0px 5px 5px #5df' : 'none',
+            opacity: selectedDegrees[name] ? 1 : 0.2
           }}
         >
           {name}

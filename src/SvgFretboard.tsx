@@ -1,20 +1,8 @@
 import React from 'react';
+import {ChromaticNotes} from "./types";
 
 type DisplayOptions = Record<string, never>;
-type ChromaticNotes = {
-  C: boolean;
-  CSharp: boolean;
-  D: boolean;
-  DSharp: boolean;
-  E: boolean;
-  F: boolean;
-  FSharp: boolean;
-  G: boolean;
-  GSharp: boolean;
-  A: boolean;
-  ASharp: boolean;
-  B: boolean;
-};
+
 type SvgFretboardProps = {
   notes?: ChromaticNotes;
   displayOptions?: DisplayOptions;
