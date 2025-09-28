@@ -5,9 +5,15 @@ import {useScaleContext} from "./ScaleContext";
 function ScaleDegreeSelectorButtons() {
   const { selectedDegrees, setSelectedDegrees } = useScaleContext();
   const handleToggle = (degree: string) => {
+    console.log("Clicked degree:", degree);
+    console.log("Current selectedDegrees:", selectedDegrees);
     setSelectedDegrees({
       ...selectedDegrees,
-      [degree]: degree !in selectedDegrees
+      [degree]: !selectedDegrees[degree]
+    });
+    console.log("Updated selectedDegrees:", {
+      ...selectedDegrees,
+      [degree]: !selectedDegrees[degree]
     });
   };
   return (

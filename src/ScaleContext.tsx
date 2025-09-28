@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useReducer, Dispatch, SetStateAction } from 'react';
-import { scaleDegrees } from './constants.js';
+import React, {createContext, Dispatch, SetStateAction, useContext, useReducer} from 'react';
+import {scaleDegrees} from './constants.js';
 
 export interface ScaleContextType {
   selectedTonic: string;
@@ -24,28 +24,33 @@ function getScaleNameFromDegrees(degrees: Record<string, boolean>) {
   return 'custom';
 }
 
+function getDegreesFromScaleName(scaleName: string) {
+  const pattern = scalePatterns[scaleName];
+  return Object.fromEntries(
+      scaleDegrees.map(({name}) => [name, pattern.some(p => p === name)])
+  );
+}
+
 type ScaleState = {
   selectedDegrees: Record<string, boolean>;
-  selectedScale: string;
+  selectedScaleName: string;
 };
 
 type ScaleAction =
-  | { type: 'setScale'; scale: string }
+  | { type: 'setScale'; scaleName: string }
   | { type: 'setDegrees'; degrees: Record<string, boolean> };
 
 function scaleReducer(state: ScaleState, action: ScaleAction): ScaleState {
   switch (action.type) {
     case 'setScale': {
-      const pattern = scalePatterns[action.scale];
-      const newDegrees = Object.fromEntries(
-        scaleDegrees.map(({name}) => [name, pattern.some(p => p === name)])
-      );
-      return { selectedScale: action.scale, selectedDegrees: newDegrees };
+      const newDegrees = getDegreesFromScaleName(action.scaleName);
+      return { selectedScaleName: action.scaleName, selectedDegrees: newDegrees };
     }
     case 'setDegrees': {
       const newDegrees = { ...state.selectedDegrees, ...action.degrees };
       const scaleName = getScaleNameFromDegrees(newDegrees);
-      return { selectedScale: scaleName, selectedDegrees: newDegrees };
+      console.log("set degrees, new scale name:", scaleName);
+      return { selectedScaleName: scaleName, selectedDegrees: newDegrees };
     }
     default:
       return state;
@@ -62,17 +67,17 @@ export function useScaleContext() {
 
 export const ScaleContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [selectedTonic, setSelectedTonic] = React.useState('G');
-  const initialDegrees = Object.fromEntries(Object.keys(scaleDegrees).map(degree => [degree, false]));
+  const initialDegrees = getDegreesFromScaleName("major")
   const [state, dispatch] = useReducer(scaleReducer, {
-    selectedScale: 'major',
+    selectedScaleName: 'major',
     selectedDegrees: initialDegrees,
   });
 
-  const setSelectedScale = (scale: string) => dispatch({ type: 'setScale', scale });
+  const setSelectedScale = (scale: string) => dispatch({ type: 'setScale', scaleName: scale });
   const setSelectedDegrees = (degrees: Record<string, boolean>) => dispatch({ type: 'setDegrees', degrees });
 
   return (
-    <ScaleContext.Provider value={{ selectedTonic, setSelectedTonic, selectedDegrees: state.selectedDegrees, setSelectedDegrees, selectedScale: state.selectedScale, setSelectedScale }}>
+    <ScaleContext.Provider value={{ selectedTonic, setSelectedTonic, selectedDegrees: state.selectedDegrees, setSelectedDegrees, selectedScale: state.selectedScaleName, setSelectedScale }}>
       {children}
     </ScaleContext.Provider>
   );

@@ -21,6 +21,9 @@ function ScaleSelector() {
         {scaleOptions.map(option => (
           <option key={option.value} value={option.value}>{option.label}</option>
         ))}
+        {
+          selectedScale === 'custom' && <option value="custom">Custom</option>
+        }
       </select>
     </div>
   );
