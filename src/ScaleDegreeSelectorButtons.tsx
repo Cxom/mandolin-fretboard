@@ -1,10 +1,11 @@
 import React from 'react';
 import { scaleDegrees } from './constants';
 import {useScaleContext} from "./ScaleContext";
+import {ScaleDegrees} from "./types";
 
 function ScaleDegreeSelectorButtons() {
   const { selectedDegrees, setSelectedDegrees } = useScaleContext();
-  const handleToggle = (degree: string) => {
+  const handleToggle = (degree: keyof ScaleDegrees) => {
     console.log("Clicked degree:", degree);
     console.log("Current selectedDegrees:", selectedDegrees);
     setSelectedDegrees({

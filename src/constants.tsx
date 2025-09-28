@@ -1,3 +1,5 @@
+import {ScaleDegrees} from "./types";
+
 export const chromaticNotes = {
   C:        { color: '#FF0000', displayText: 'C' },
   CSharp:   { color: '#FF7F00', displayText: <>{'C'}#</> },
@@ -13,7 +15,7 @@ export const chromaticNotes = {
   B:        { color: '#8B4513', displayText: 'B' }
 };
 
-export const scaleDegrees = [
+export const scaleDegrees: { name: keyof ScaleDegrees, color: string }[] = [
   { name: '1', color: '#FF0000' },
   { name: 'b2', color: '#FF7F00' },
   { name: '2', color: '#FFEA00' },
