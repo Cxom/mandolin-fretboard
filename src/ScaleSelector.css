@@ -1,0 +1,11 @@
+/* TODO improve styling - round corners */
+.scale-selector-dropdown {
+  font-size: 1.1em;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #fff;
+  border: 5px solid #0096c7;
+  font-family: 'Josefin Sans', Arial, Helvetica, sans-serif;
+  color: #000;
+}
+
