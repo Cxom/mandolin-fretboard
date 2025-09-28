@@ -5,14 +5,14 @@ import {useScaleContext} from "./ScaleContext";
 function ScaleDegreeSelectorButtons() {
   const { selectedDegrees, setSelectedDegrees } = useScaleContext();
   const handleToggle = (degree: string) => {
-    setSelectedDegrees(prev => ({
-      ...prev,
-      [degree]: !prev[degree]
-    }));
+    setSelectedDegrees({
+      ...selectedDegrees,
+      [degree]: degree !in selectedDegrees
+    });
   };
   return (
     <div className="key-selector-buttons-container">
-      {scaleDegrees.map(({name,  color}) => (
+      {scaleDegrees.map(({ name, color }) => (
         <button
           key={name}
           className="key-selector-btn"

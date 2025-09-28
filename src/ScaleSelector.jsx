@@ -6,6 +6,7 @@ const scaleOptions = [
   { value: 'major', label: 'Major' },
   { value: 'minor', label: 'Minor' },
   { value: 'pentatonicMajor', label: 'Pentatonic Major' }
+  // Custom is intentionally omitted from the dropdown
 ];
 
 function ScaleSelector() {
