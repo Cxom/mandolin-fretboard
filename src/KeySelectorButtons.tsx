@@ -1,17 +1,21 @@
 import React from 'react';
 import { chromaticNotes } from './constants.js';
+import {useScaleContext} from "./ScaleContext";
 
-function KeySelectorButtons({ selectedNote, setSelectedNote }) {
+
+
+function KeySelectorButtons() {
+  const { selectedTonic, setSelectedTonic } = useScaleContext()
   return (
     <div className="key-selector-buttons-container">
       {Object.entries(chromaticNotes).map(([note, { color, displayText }]) => (
         <button
           key={note}
           className="key-selector-btn"
-          onClick={() => setSelectedNote(note)}
+          onClick={() => setSelectedTonic(note)}
           style={{
             background: color,
-            outline: selectedNote === note ? '5px solid #fff' : 'none'
+            outline: selectedTonic === note ? '5px solid #fff' : 'none'
           }}
         >
           {displayText}

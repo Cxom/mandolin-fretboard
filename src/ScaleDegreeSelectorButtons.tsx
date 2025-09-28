@@ -1,16 +1,18 @@
 import React from 'react';
-import { scaleDegrees } from './constants.js';
+import { scaleDegrees } from './constants';
+import {useScaleContext} from "./ScaleContext";
 
-function ScaleDegreeSelectorButtons({ selectedDegrees, setSelectedDegrees }) {
-  const handleToggle = (degree) => {
-    setSelectedDegrees((prev) => ({
+function ScaleDegreeSelectorButtons() {
+  const { selectedDegrees, setSelectedDegrees } = useScaleContext();
+  const handleToggle = (degree: string) => {
+    setSelectedDegrees(prev => ({
       ...prev,
       [degree]: !prev[degree]
     }));
   };
   return (
     <div className="key-selector-buttons-container">
-      {scaleDegrees.map(({ name, color }) => (
+      {scaleDegrees.map(({name,  color}) => (
         <button
           key={name}
           className="key-selector-btn"
@@ -29,3 +31,4 @@ function ScaleDegreeSelectorButtons({ selectedDegrees, setSelectedDegrees }) {
 }
 
 export default ScaleDegreeSelectorButtons;
+

@@ -28,3 +28,4 @@ export const scaleDegrees = [
   { name: '7', color: '#8B4513' }
 ];
 
+

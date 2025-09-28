@@ -5,6 +5,7 @@ import ScaleDegreeSelectorButtons from './ScaleDegreeSelectorButtons';
 import KeySelectorButtons from './KeySelectorButtons';
 import ScaleSelector from './ScaleSelector';
 import { chromaticNotes, scaleDegrees } from './constants.js';
+import { ScaleContextProvider } from './ScaleContext';
 
 function App() {
   const noteNames = Object.keys(chromaticNotes);
@@ -14,12 +15,12 @@ function App() {
   const [selectedScale, setSelectedScale] = useState('major');
 
   return (
-    <>
-      <ScaleSelector selectedScale={selectedScale} setSelectedScale={setSelectedScale} />
-      <KeySelectorButtons selectedNote={selectedNote} setSelectedNote={setSelectedNote} chromaticNotes={chromaticNotes}/>
-      <ScaleDegreeSelectorButtons selectedDegrees={selectedDegrees} setSelectedDegrees={setSelectedDegrees} />
-      <SvgFretboard notes={{ C: true, D: true, E: true, F: true, G: true, A: true, B: true }} />
-    </>
+    <ScaleContextProvider>
+      <ScaleSelector />
+      <KeySelectorButtons />
+      <ScaleDegreeSelectorButtons />
+      <SvgFretboard />
+    </ScaleContextProvider>
   );
 }
 
