@@ -1,6 +1,7 @@
 import React, {createContext, Dispatch, SetStateAction, useContext, useMemo, useReducer} from 'react';
 import {scaleDegrees} from './constants.js';
 import {ChromaticNote, ScaleDegree, ScaleDegreeSelection} from "./types";
+import {chromaticScaleForTonic} from "./assets/scaleUtils";
 
 export interface ScaleContextType {
   selectedTonic: ChromaticNote;
@@ -9,7 +10,7 @@ export interface ScaleContextType {
   setSelectedDegrees: (degrees: ScaleDegreeSelection) => void;
   selectedScaleName: string;
   setSelectedScaleName: (scale: string) => void;
-  selectedNotes: ChromaticNote[];
+  selectedNotes: [ChromaticNote, ScaleDegree][];
 }
 
 const scalePatterns: Record<string, string[]> = {
@@ -29,7 +30,7 @@ function getScaleNameFromDegrees(degrees: Record<string, boolean>) {
 function getDegreesFromScaleName(scaleName: string) :ScaleDegreeSelection {
   const pattern = scalePatterns[scaleName];
   return Object.fromEntries(
-      scaleDegrees.map(({name}) => [name, pattern.some(p => p === name)])
+      scaleDegrees.keys().map(name => [name, pattern.some(p => p === name)])
   ) as ScaleDegreeSelection;
 }
 
@@ -67,9 +68,8 @@ export function useScaleContext() {
 }
 
 function resolveNotesForScale(selectedTonic: ChromaticNote, degreeSelection: ScaleDegreeSelection) {
-    const cChromaticScale: ChromaticNote[] = [
-        'C', 'CSharp', 'D', 'DSharp', 'E', 'F', 'FSharp', 'G', 'GSharp', 'A', 'ASharp', 'B'
-    ];
+    let tonicChromaticScale = chromaticScaleForTonic(selectedTonic);
+
     const degreeToSemitone: [ScaleDegree, number][] = [
         ['1', 0],
         ['b2', 1],
@@ -85,16 +85,10 @@ function resolveNotesForScale(selectedTonic: ChromaticNote, degreeSelection: Sca
         ['7', 11]
     ];
 
-    const tonicIndex = cChromaticScale.indexOf(selectedTonic);
-    if (tonicIndex === -1) throw new Error('Invalid tonic note');
-
-    let tonicChromaticScale = cChromaticScale
-        .map((_, i) => cChromaticScale[(tonicIndex + i) % cChromaticScale.length]);
-
-    const selectedNotes: ChromaticNote[] = degreeToSemitone
+    const selectedNotes: [ChromaticNote, ScaleDegree][] = degreeToSemitone
         // filter only selected degrees (those set to true in degreeSelection)
         .filter(([degree]) => degreeSelection[degree as ScaleDegree])
-        .map(([, offset]) => tonicChromaticScale[offset]);
+        .map(([degree, offset]) => [tonicChromaticScale[offset], degree]);
 
     return selectedNotes;
 }

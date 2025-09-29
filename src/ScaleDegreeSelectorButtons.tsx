@@ -13,7 +13,7 @@ function ScaleDegreeSelectorButtons() {
   };
   return (
     <div className="key-selector-buttons-container">
-      {scaleDegrees.map(({ name, color }) => (
+      {Array.from(scaleDegrees, (([name, { color }]) => (
         <button
           key={name}
           className="key-selector-btn"
@@ -26,7 +26,7 @@ function ScaleDegreeSelectorButtons() {
         >
           {name}
         </button>
-      ))}
+      )))}
     </div>
   );
 }
