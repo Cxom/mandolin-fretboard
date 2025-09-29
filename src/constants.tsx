@@ -1,6 +1,7 @@
-import {ChromaticNotes, ScaleDegrees} from "./types";
+import {ChromaticNote, ScaleDegrees} from "./types";
+import React from "react";
 
-export const chromaticNotes: { name: keyof ChromaticNotes, color: string, displayText: React.ReactNode }[] = [
+export const chromaticNotes: { name: ChromaticNote, color: string, displayText: React.ReactNode }[] = [
   { name: 'C',        color: '#FF0000', displayText: 'C' },
   { name: 'CSharp',   color: '#FF7F00', displayText: <>{'C'}#</> },
   { name: 'D',        color: '#FFEA00', displayText: 'D' },

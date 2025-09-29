@@ -10,19 +10,19 @@ const scaleOptions = [
 ];
 
 function ScaleSelector() {
-  const { selectedScale, setSelectedScale } = useScaleContext();
+  const { selectedScaleName, setSelectedScaleName } = useScaleContext();
   return (
     <div style={{ marginBottom: '16px' }}>
       <select
-        value={selectedScale}
-        onChange={e => setSelectedScale(e.target.value)}
+        value={selectedScaleName}
+        onChange={e => setSelectedScaleName(e.target.value)}
         className="scale-selector-dropdown"
       >
         {scaleOptions.map(option => (
           <option key={option.value} value={option.value}>{option.label}</option>
         ))}
         {
-          selectedScale === 'custom' && <option value="custom">Custom</option>
+          selectedScaleName === 'custom' && <option value="custom">Custom</option>
         }
       </select>
     </div>

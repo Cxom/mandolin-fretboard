@@ -1,6 +1,5 @@
 import React from 'react';
-import {ChromaticNotes} from "./types";
-import {chromaticNotes} from "./constants";
+import {useScaleContext} from "./ScaleContext";
 
 type DisplayOptions = Record<string, never>;
 
@@ -82,6 +81,7 @@ function SvgFretboard({ displayOptions = {} }: SvgFretboardProps) {
 }
 
 function noteIndicators({ displayOptions }: { displayOptions: DisplayOptions }) {
+  const { selectedTonic, selectedDegrees } = useScaleContext()
 
   return <></>
 }

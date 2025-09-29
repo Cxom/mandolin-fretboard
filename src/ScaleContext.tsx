@@ -1,14 +1,14 @@
-import React, {createContext, Dispatch, SetStateAction, useContext, useReducer} from 'react';
+import React, {createContext, Dispatch, SetStateAction, useContext, useMemo, useReducer} from 'react';
 import {scaleDegrees} from './constants.js';
-import {ScaleDegrees} from "./types";
+import {ChromaticNote, ScaleDegrees} from "./types";
 
 export interface ScaleContextType {
-  selectedTonic: string;
-  setSelectedTonic: Dispatch<SetStateAction<string>>;
+  selectedTonic: ChromaticNote;
+  setSelectedTonic: Dispatch<SetStateAction<ChromaticNote>>;
   selectedDegrees: ScaleDegrees;
   setSelectedDegrees: (degrees: ScaleDegrees) => void;
-  selectedScale: string;
-  setSelectedScale: (scale: string) => void;
+  selectedScaleName: string;
+  setSelectedScaleName: (scale: string) => void;
 }
 
 const scalePatterns: Record<string, string[]> = {
@@ -65,19 +65,25 @@ export function useScaleContext() {
   return ctx;
 }
 
+// function resolveNotesForScale(selectedTonic: ChromaticNote, selectedDegrees: ScaleDegrees) {
+//
+// }
+
 export const ScaleContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [selectedTonic, setSelectedTonic] = React.useState('G');
+  const [selectedTonic, setSelectedTonic] = React.useState<ChromaticNote>('G');
   const initialDegrees = getDegreesFromScaleName("major")
   const [state, dispatch] = useReducer(scaleReducer, {
     selectedScaleName: 'major',
     selectedDegrees: initialDegrees,
   });
 
-  const setSelectedScale = (scale: string) => dispatch({ type: 'setScale', scaleName: scale });
+  const setSelectedScaleName = (scale: string) => dispatch({ type: 'setScale', scaleName: scale });
   const setSelectedDegrees = (degrees: ScaleDegrees) => dispatch({ type: 'setDegrees', degrees });
 
+  // const selectedNotes = useMemo(() => resolveNotesForScale(selectedTonic, state.selectedDegrees), [selectedTonic, state.selectedDegrees])
+
   return (
-    <ScaleContext.Provider value={{ selectedTonic, setSelectedTonic, selectedDegrees: state.selectedDegrees, setSelectedDegrees, selectedScale: state.selectedScaleName, setSelectedScale }}>
+    <ScaleContext.Provider value={{ selectedTonic, setSelectedTonic, selectedDegrees: state.selectedDegrees, setSelectedDegrees, selectedScaleName: state.selectedScaleName, setSelectedScaleName }}>
       {children}
     </ScaleContext.Provider>
   );
