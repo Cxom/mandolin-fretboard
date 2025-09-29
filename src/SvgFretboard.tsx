@@ -37,6 +37,7 @@ const FRET_INDICATOR_SIZE = 1.05;
 
 const NOTE_INDICATOR_OFFSET = -0.5;
 const NOTE_INDICATOR_SIZE = 1.5;
+const NOTE_INDICATOR_FONT_SIZE = 80;
 
 // TODO pull a lot of styles out into CSS
 
@@ -199,6 +200,21 @@ function noteIndicators({ displayOptions }: { displayOptions: DisplayOptions }) 
                 fill={degreeInfo!.color}
             />
         );
+        indicators.push(
+            <text
+                key={`note-indicator-course-${course}-fret-${fret}-text`}
+                x={`${NUT_START + FRET_GAP * fret + NOTE_INDICATOR_OFFSET}%`}
+                y={`${VERTICAL_TOP + GAP_BETWEEN_COURSES * course + 2.95}%`}
+                fontFamily="'Josefin Sans', Arial, Helvetica, sans-serif"
+                fontWeight={800}
+                fontSize={`${NOTE_INDICATOR_FONT_SIZE}%`}
+                fill="#fff"
+                textAnchor="middle"
+                alignmentBaseline="baseline"
+            >
+              {currentScaleDegree}
+            </text>
+        )
       }
       currentScaleDegree = degreeInfo!.next;
     }
