@@ -12,18 +12,20 @@ export type ChromaticNote =
     | 'ASharp'
     | 'B';
 
-export type ScaleDegree = keyof ScaleDegrees;
-export type ScaleDegrees = {
-    '1': boolean;
-    'b2': boolean;
-    '2': boolean;
-    'b3': boolean;
-    '3': boolean;
-    '4': boolean;
-    'b5': boolean;
-    '5': boolean;
-    'b6': boolean;
-    '6': boolean;
-    'b7': boolean;
-    '7': boolean;
+export type ScaleDegree =
+    | '1'
+    | 'b2'
+    | '2'
+    | 'b3'
+    | '3'
+    | '4'
+    | 'b5'
+    | '5'
+    | 'b6'
+    | '6'
+    | 'b7'
+    | '7';
+
+export type ScaleDegreeSelection = {
+    [key in ScaleDegree]: boolean;
 }

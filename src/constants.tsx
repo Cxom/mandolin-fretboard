@@ -1,4 +1,4 @@
-import {ChromaticNote, ScaleDegrees} from "./types";
+import {ChromaticNote, ScaleDegree, ScaleDegreeSelection} from "./types";
 import React from "react";
 
 export const chromaticNotes: { name: ChromaticNote, color: string, displayText: React.ReactNode }[] = [
@@ -16,7 +16,7 @@ export const chromaticNotes: { name: ChromaticNote, color: string, displayText: 
   { name: 'B',        color: '#8B4513', displayText: 'B' }
 ];
 
-export const scaleDegrees: { name: keyof ScaleDegrees, color: string }[] = [
+export const scaleDegrees: { name: ScaleDegree, color: string }[] = [
   { name: '1', color: '#FF0000' },
   { name: 'b2', color: '#FF7F00' },
   { name: '2', color: '#FFEA00' },
