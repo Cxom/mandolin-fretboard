@@ -29,8 +29,12 @@ const FRET_WIDTH = 0.3; // percent
 const NUT_WIDTH = 1.1; // percent
 
 const NUT_START = 4.65; // percent
+const FRETBOARD_END = 99;
 
-const FRETBOARD_LENGTH = 100 - NUT_START; // percent
+const FRETBOARD_LENGTH = FRETBOARD_END - NUT_START; // percent
+const BASE_FRET_GAP = FRETBOARD_LENGTH / 9; // This will have to change if we change the number of frets visible
+const FRET_SIZE_DIFFERENCE_INCREMENT = -BASE_FRET_GAP / 22;
+
 const FRET_GAP = FRETBOARD_LENGTH / FRETS; // percent
 
 const FRET_INDICATOR_SIZE = 1.05;
@@ -53,7 +57,8 @@ function SvgFretboard({ displayOptions = {} }: SvgFretboardProps) {
       {stringLabels()}
       {nut()}
       {frets()}
-      {fretIndicators()}
+      {fretDots()}
+      {/* TODO fret number labels */}
       {noteIndicators({ displayOptions })}
     </svg>
   );
@@ -143,7 +148,7 @@ function frets() {
   });
 }
 
-function fretIndicators() {
+function fretDots() {
   // Positions for fret dots
   const indicators = [
     // Between 2nd and 3rd string, between frets 4/5, 6/7, 9/10
@@ -154,6 +159,8 @@ function fretIndicators() {
     { fret: 11.5, string: 0.5 },
     // Between 3rd and 4th string, between frets 11/12
     { fret: 11.5, string: 2.5 },
+    // Between 2nd and 3rd string, between frets 14/15
+    { fret: 14.5, string: 1.5 },
   ];
 
   return indicators.map((ind, idx) => {

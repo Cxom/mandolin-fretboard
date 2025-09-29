@@ -21,6 +21,11 @@ If you are developing a production application, we recommend using TypeScript wi
 - If using a scale preset, choose a chord from the scale to highlight those notes
 - Program in a chord sequence (and tempo) to highlight for
 - Animate movements like enclosures
+- Color options for what's displayed on the fretboard
+- Multiple fretboard views?
+- Toggleable text labels on the fretboard
+- Optional octave indication on the fretboard indicators
+- Changeable labels for the note indicator text
 
 ## General TODO
 - recolor and decolor key center buttons to not confuse scale degree thinking, add options
