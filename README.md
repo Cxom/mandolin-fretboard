@@ -14,14 +14,15 @@ If you are developing a production application, we recommend using TypeScript wi
 
 ## Feature List
 - Choose a key center
+- Indicate resolved note in scale degree selector
 - Choose scale degrees to show (or load a scale type preset)
 - Choose whether to show scale degrees, note names, or both. Adjust enharmonic notation preferences if chromatic
-- Customize the presentation of the scale degrees
+- Customize the presentation of the scale degrees (Allow adjusting colors)
 - Choose a hand position for a narrower view
 - If using a scale preset, choose a chord from the scale to highlight those notes
 - Program in a chord sequence (and tempo) to highlight for
 - Animate movements like enclosures
-- Color options for what's displayed on the fretboard
+- Color schema options for what's displayed on the fretboard (colored to degrees, colored to notes)
 - Multiple fretboard views?
 - Toggleable text labels on the fretboard
 - Optional octave indication on the fretboard indicators

@@ -13,7 +13,7 @@ type SvgFretboardProps = {
 const SVG_WIDTH = '100%';
 const SVG_HEIGHT = '100%';
 
-const FRETS = 12;
+const FRETS = 20;
 
 const VERTICAL_TOP = 20; // percent
 const GAP_BETWEEN_COURSES = 20; // percent
@@ -32,10 +32,17 @@ const NUT_START = 4.65; // percent
 const FRETBOARD_END = 99;
 
 const FRETBOARD_LENGTH = FRETBOARD_END - NUT_START; // percent
-const BASE_FRET_GAP = FRETBOARD_LENGTH / 9; // This will have to change if we change the number of frets visible
-const FRET_SIZE_DIFFERENCE_INCREMENT = -BASE_FRET_GAP / 22;
-
-const FRET_GAP = FRETBOARD_LENGTH / FRETS; // percent
+const BASE_FRET_GAP = (44 * FRETBOARD_LENGTH) / (FRETS * (45 - FRETS));
+const LINEAR_FRET_GAP = FRETBOARD_LENGTH / FRETS; // percent
+const useLinearFrets = false; // toggle for linear vs real fret spacing
+const calcFretGap = (fretIndex: number) => useLinearFrets ? LINEAR_FRET_GAP : BASE_FRET_GAP * (1 - (fretIndex / 22))
+const calcFretPosition = (fretIndex: number) => {
+  if (useLinearFrets) {
+    return NUT_START + LINEAR_FRET_GAP * (fretIndex);
+  } else {
+    return NUT_START + BASE_FRET_GAP * (fretIndex - (fretIndex * (fretIndex - 1)) / 44);
+  }
+};
 
 const FRET_INDICATOR_SIZE = 1.05;
 
@@ -133,10 +140,11 @@ function frets() {
   const fretTop = VERTICAL_TOP - NUT_FRET_BUFFER;
   const fretBottom = VERTICAL_TOP + (GAP_BETWEEN_COURSES * 3) + NUT_FRET_BUFFER;
   return Array.from({ length: FRETS }, (_, i) => {
-    const horizontalPosition = NUT_START + ((i + 1) * FRET_GAP);
+    let fretNumber = i + 1;
+    const horizontalPosition = calcFretPosition(fretNumber);
     return (
       <line
-        key={`fret-${i + 1}`}
+        key={`fret-${fretNumber}`}
         x1={`${horizontalPosition}%`}
         y1={`${fretTop}%`}
         x2={`${horizontalPosition}%`}
@@ -150,7 +158,7 @@ function frets() {
 
 function fretDots() {
   // Positions for fret dots
-  const indicators = [
+  const fretDots = [
     // Between 2nd and 3rd string, between frets 4/5, 6/7, 9/10
     { fret: 4.5, string: 1.5 },
     { fret: 6.5, string: 1.5 },
@@ -163,15 +171,18 @@ function fretDots() {
     { fret: 14.5, string: 1.5 },
   ];
 
-  return indicators.map((ind, idx) => {
-    // Calculate X position: NUT_START + FRET_GAP * ind.fret
-    const x = NUT_START + FRET_GAP * ind.fret;
-    // Calculate Y position: VERTICAL_TOP + GAP_BETWEEN_COURSES * ind.string
-    const y = VERTICAL_TOP + GAP_BETWEEN_COURSES * ind.string;
+  return fretDots.map(fretDot => {
+
+    // follows scaling between frets to center dot
+    const scaledDotPosition = calcFretPosition(fretDot.fret);
+    // linearly centers dot between frets
+    const centeredDotPosition = calcFretPosition(Math.floor(fretDot.fret)) + .5 * calcFretGap(Math.floor(fretDot.fret));
+
+    const y = VERTICAL_TOP + GAP_BETWEEN_COURSES * fretDot.string;
     return (
         <circle
-            key={`fret-indicator-${idx}`}
-            cx={`${x}%`}
+            key={`fret-indicator-${Math.ceil(fretDot.fret)}-${fretDot.string}`}
+            cx={`${centeredDotPosition}%`}
             cy={`${y}%`}
             r={`${FRET_INDICATOR_SIZE}%`}
             fill="#ddd"
@@ -201,7 +212,7 @@ function noteIndicators({ displayOptions }: { displayOptions: DisplayOptions }) 
         indicators.push(
             <circle
                 key={`note-indicator-course-${course}-fret-${fret}`}
-                cx={`${NUT_START + FRET_GAP * fret + NOTE_INDICATOR_OFFSET}%`}
+                cx={`${calcFretPosition(fret) + NOTE_INDICATOR_OFFSET}%`}
                 cy={`${VERTICAL_TOP + GAP_BETWEEN_COURSES * course}%`}
                 r={`${NOTE_INDICATOR_SIZE}%`}
                 fill={degreeInfo!.color}
@@ -210,7 +221,7 @@ function noteIndicators({ displayOptions }: { displayOptions: DisplayOptions }) 
         indicators.push(
             <text
                 key={`note-indicator-course-${course}-fret-${fret}-text`}
-                x={`${NUT_START + FRET_GAP * fret + NOTE_INDICATOR_OFFSET}%`}
+                x={`${calcFretPosition(fret) + NOTE_INDICATOR_OFFSET}%`}
                 y={`${VERTICAL_TOP + GAP_BETWEEN_COURSES * course + 2.95}%`}
                 fontFamily="'Josefin Sans', Arial, Helvetica, sans-serif"
                 fontWeight={800}
