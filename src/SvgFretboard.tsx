@@ -8,21 +8,27 @@ type SvgFretboardProps = {
   displayOptions?: DisplayOptions;
 };
 
-const FRETS = 12;
 const SVG_WIDTH = '100%';
 const SVG_HEIGHT = '100%';
-const VERTICAL_LINES = 13;
-const HORIZONTAL_START_Y = 20; // percent
-const HORIZONTAL_GAP = 20; // percent
-const VERTICAL_GAP = 7; // percent
-const NUT_FRET_BUFFER = 2; // percent
-const STRING_OFFSET = 2; // percent, for double string spacing
-const LABEL_X = 2; // percent, for string label position
+
+const FRETS = 12;
+
+const VERTICAL_TOP = 20; // percent
+const GAP_BETWEEN_COURSES = 20; // percent
+const GAP_BETWEEN_STRINGS_IN_COURSE = 4; // percent, for double string spacing
+
+const NUT_FRET_BUFFER = 2.5; // percent
+
+const LABEL_X = 0; // percent, for string label position
 const LABEL_FONT_SIZE = 150; // percent, for font size
 
-const STRING_WIDTH = 0.2;
-const FRET_WIDTH = 0.3;
-const NUT_WIDTH = 2;
+const STRING_WIDTH = 0.2; // percent
+const FRET_WIDTH = 0.3; // percent
+const NUT_WIDTH = 1.1; // percent
+
+const NUT_START = 4.1; // percent
+const FRETBOARD_LENGTH = 100 - NUT_START; // percent
+const FRET_GAP = FRETBOARD_LENGTH / FRETS; // percent
 
 function SvgFretboard({ displayOptions = {} }: SvgFretboardProps) {
   return (
@@ -49,14 +55,14 @@ function noteIndicators({ displayOptions }: { displayOptions: DisplayOptions }) 
 function strings() {
   const lines = [];
   for (let i = 0; i < 4; i++) {
-    const centerY = HORIZONTAL_START_Y + i * HORIZONTAL_GAP;
+    const courseCenterY = VERTICAL_TOP + i * GAP_BETWEEN_COURSES;
     lines.push(
       <line
         key={`string-${i}-up`}
-        x1={"0%"}
-        y1={`${centerY - STRING_OFFSET}%`}
+        x1={`${NUT_START}%`}
+        y1={`${courseCenterY - GAP_BETWEEN_STRINGS_IN_COURSE / 2}%`}
         x2={"100%"}
-        y2={`${centerY - STRING_OFFSET}%`}
+        y2={`${courseCenterY - GAP_BETWEEN_STRINGS_IN_COURSE / 2}%`}
         stroke="black"
         strokeWidth={`${STRING_WIDTH}%`}
       />
@@ -64,10 +70,10 @@ function strings() {
     lines.push(
       <line
         key={`string-${i}-down`}
-        x1={"0%"}
-        y1={`${centerY + STRING_OFFSET}%`}
+        x1={`${NUT_START}%`}
+        y1={`${courseCenterY + GAP_BETWEEN_STRINGS_IN_COURSE / 2}%`}
         x2={"100%"}
-        y2={`${centerY + STRING_OFFSET}%`}
+        y2={`${courseCenterY + GAP_BETWEEN_STRINGS_IN_COURSE / 2}%`}
         stroke="black"
         strokeWidth={`${STRING_WIDTH}%`}
       />
@@ -82,13 +88,13 @@ function stringLabels() {
     <text
       key={label}
       x={`${LABEL_X}%`}
-      y={`${HORIZONTAL_START_Y + i * HORIZONTAL_GAP + 6}%`}
+      y={`${VERTICAL_TOP + i * GAP_BETWEEN_COURSES + 6}%`}
       fontFamily="'Josefin Sans', Arial, Helvetica, sans-serif"
       fontWeight={800}
       fontSize={`${LABEL_FONT_SIZE}%`}
       fill="#fff"
       textAnchor="start"
-      alignmentBaseline="middle"
+      alignmentBaseline="baseline"
     >
       {label}
     </text>
@@ -96,14 +102,14 @@ function stringLabels() {
 }
 
 function nut() {
-  const nutTop = HORIZONTAL_START_Y - NUT_FRET_BUFFER;
-  const nutBottom = HORIZONTAL_START_Y + (HORIZONTAL_GAP * 3) + NUT_FRET_BUFFER;
+  const nutTop = VERTICAL_TOP - NUT_FRET_BUFFER;
+  const nutBottom = VERTICAL_TOP + (GAP_BETWEEN_COURSES * 3) + NUT_FRET_BUFFER;
   return (
     <line
       key="nut"
-      x1={"0%"}
+      x1={`${NUT_START}%`}
       y1={`${nutTop}%`}
-      x2={"0%"}
+      x2={`${NUT_START}%`}
       y2={`${nutBottom}%`}
       stroke="#DDD"
       strokeWidth={`${NUT_WIDTH}%`}
@@ -112,16 +118,16 @@ function nut() {
 }
 
 function frets() {
-  const fretTop = HORIZONTAL_START_Y - NUT_FRET_BUFFER;
-  const fretBottom = HORIZONTAL_START_Y + (HORIZONTAL_GAP * 3) + NUT_FRET_BUFFER;
-  return Array.from({ length: VERTICAL_LINES - 1 }, (_, i) => {
-    const x = ((i + 1) * VERTICAL_GAP);
+  const fretTop = VERTICAL_TOP - NUT_FRET_BUFFER;
+  const fretBottom = VERTICAL_TOP + (GAP_BETWEEN_COURSES * 3) + NUT_FRET_BUFFER;
+  return Array.from({ length: FRETS }, (_, i) => {
+    const horizontalPosition = NUT_START + ((i + 1) * FRET_GAP);
     return (
       <line
         key={`fret-${i + 1}`}
-        x1={`${x}%`}
+        x1={`${horizontalPosition}%`}
         y1={`${fretTop}%`}
-        x2={`${x}%`}
+        x2={`${horizontalPosition}%`}
         y2={`${fretBottom}%`}
         stroke="#555"
         strokeWidth={`${FRET_WIDTH}%`}
