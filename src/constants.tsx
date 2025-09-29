@@ -17,19 +17,20 @@ export const chromaticNotes: { name: ChromaticNote, color: string, displayText: 
   { name: 'B',        color: '#8B4513', displayText: 'B' }
 ];
 
-export const scaleDegrees: Map<ScaleDegree, { color: string }> = new Map<ScaleDegree, {color: string}>([
-  ['1', { color: '#FF0000' }],
-  ['b2', { color: '#FF7F00' }],
-  ['2', { color: '#FFEA00' }],
-  ['b3', { color: '#00FF00' }],
-  ['3', { color: '#0000FF' }],
-  ['4', { color: '#4B0082' }],
-  ['b5', { color: '#9400D3' }],
-  ['5', { color: '#00CED1' }],
-  ['b6', { color: '#FFD700' }],
-  ['6', { color: '#FF1493' }],
-  ['b7', { color: '#00FF7F' }],
-  ['7', { color: '#8B4513' }]
+export type ScaleDegreeInfo = { color: string, next: ScaleDegree }
+export const scaleDegrees: Map<ScaleDegree, ScaleDegreeInfo> = new Map([
+  ['1', { color: '#FF0000', next: 'b2' }],
+  ['b2', { color: '#FF7F00', next: '2' }],
+  ['2', { color: '#FFEA00', next: 'b3' }],
+  ['b3', { color: '#00FF00', next: '3' }],
+  ['3', { color: '#0000FF', next: '4' }],
+  ['4', { color: '#4B0082', next: 'b5' }],
+  ['b5', { color: '#9400D3', next: '5' }],
+  ['5', { color: '#00CED1', next: 'b6' }],
+  ['b6', { color: '#FFD700', next: '6' }],
+  ['6', { color: '#FF1493', next: 'b7' }],
+  ['b7', { color: '#00FF7F', next: '7' }],
+  ['7', { color: '#8B4513', next: '1' }]
 ]);
 
 

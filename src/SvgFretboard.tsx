@@ -1,6 +1,6 @@
 import React from 'react';
 import {useScaleContext} from "./ScaleContext";
-import {ChromaticNote} from "./types";
+import {ChromaticNote, ScaleDegree} from "./types";
 import {scaleDegrees} from "./constants";
 import {determineScaleDegree} from "./assets/scaleUtils";
 
@@ -89,7 +89,7 @@ function strings() {
 }
 
 function stringLabels() {
-  const labels = ['G', 'D', 'A', 'E'];
+  const labels = ['E', 'A', 'D', 'G'];
   return labels.map((label, i) => (
     <text
       key={label}
@@ -174,6 +174,35 @@ function fretIndicators() {
 
 function noteIndicators({ displayOptions }: { displayOptions: DisplayOptions }) {
   const indicators = [];
+
+  const { selectedTonic, selectedDegrees } = useScaleContext()
+
+  const stringTunings: ChromaticNote[] = ['E', 'A', 'D', 'G']; // from highest to lowest course
+
+  for (let course = 0; course < stringTunings.length; course++) {
+
+    // Determine which scale degree the tuning note is.
+    // Then, iterate through each fret, ticking up the chromatic note and the scale degree as we go.
+    // If the scale degree is selected in selectedDegrees from the scale context, then we add a circle indicator in the color of the scale degree
+
+    const tuningNote = stringTunings[course];
+    let currentScaleDegree = determineScaleDegree(selectedTonic, tuningNote);
+    for (let fret = 0; fret <= FRETS; fret++) {
+      const degreeInfo = scaleDegrees.get(currentScaleDegree);
+      if (selectedDegrees[currentScaleDegree]) {
+        indicators.push(
+            <circle
+                key={`note-indicator-course-${course}-fret-${fret}`}
+                cx={`${NUT_START + FRET_GAP * fret + NOTE_INDICATOR_OFFSET}%`}
+                cy={`${VERTICAL_TOP + GAP_BETWEEN_COURSES * course}%`}
+                r={`${NOTE_INDICATOR_SIZE}%`}
+                fill={degreeInfo!.color}
+            />
+        );
+      }
+      currentScaleDegree = degreeInfo!.next;
+    }
+  }
 
   return indicators
 }
