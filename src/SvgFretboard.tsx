@@ -27,8 +27,41 @@ const FRET_WIDTH = 0.3; // percent
 const NUT_WIDTH = 1.1; // percent
 
 const NUT_START = 4.1; // percent
+
 const FRETBOARD_LENGTH = 100 - NUT_START; // percent
 const FRET_GAP = FRETBOARD_LENGTH / FRETS; // percent
+
+const FRET_INDICATOR_SIZE = 1.05;
+
+function fretIndicators() {
+  // Positions for fret dots
+  const indicators = [
+    // Between 2nd and 3rd string, between frets 4/5, 6/7, 9/10
+    { fret: 4.5, string: 1.5 },
+    { fret: 6.5, string: 1.5 },
+    { fret: 9.5, string: 1.5 },
+    // Between 1st and 2nd string, between frets 11/12
+    { fret: 11.5, string: 0.5 },
+    // Between 3rd and 4th string, between frets 11/12
+    { fret: 11.5, string: 2.5 },
+  ];
+
+  return indicators.map((ind, idx) => {
+    // Calculate X position: NUT_START + FRET_GAP * ind.fret
+    const x = NUT_START + FRET_GAP * ind.fret;
+    // Calculate Y position: VERTICAL_TOP + GAP_BETWEEN_COURSES * ind.string
+    const y = VERTICAL_TOP + GAP_BETWEEN_COURSES * ind.string;
+    return (
+      <circle
+        key={`fret-indicator-${idx}`}
+        cx={`${x}%`}
+        cy={`${y}%`}
+        r={`${FRET_INDICATOR_SIZE}%`}
+        fill="#ddd"
+      />
+    );
+  });
+}
 
 function SvgFretboard({ displayOptions = {} }: SvgFretboardProps) {
   return (
@@ -42,6 +75,7 @@ function SvgFretboard({ displayOptions = {} }: SvgFretboardProps) {
       {stringLabels()}
       {nut()}
       {frets()}
+      {fretIndicators()}
       {noteIndicators({ displayOptions })}
     </svg>
   );
