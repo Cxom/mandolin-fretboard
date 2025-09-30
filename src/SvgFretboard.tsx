@@ -44,11 +44,13 @@ const calcFretPosition = (fretIndex: number) => {
   }
 };
 
-const FRET_INDICATOR_SIZE = 1.05;
+const FRET_DOT_SIZE = 1.05; // percent
+const FRET_NUMBER_LABEL_VERTICAL_POSITION = 12; // percent
 
 const NOTE_INDICATOR_OFFSET = -0.5;
 const NOTE_INDICATOR_SIZE = 1.5;
 const NOTE_INDICATOR_FONT_SIZE = 80;
+const FRET_NUMBER_LABEL_FONT_SIZE = 80;
 
 // TODO pull a lot of styles out into CSS
 
@@ -65,7 +67,7 @@ function SvgFretboard({ displayOptions = {} }: SvgFretboardProps) {
       {nut()}
       {frets()}
       {fretDots()}
-      {/* TODO fret number labels */}
+      {fretNumberLabels()}
       {noteIndicators({ displayOptions })}
     </svg>
   );
@@ -181,14 +183,37 @@ function fretDots() {
     const y = VERTICAL_TOP + GAP_BETWEEN_COURSES * fretDot.string;
     return (
         <circle
-            key={`fret-indicator-${Math.ceil(fretDot.fret)}-${fretDot.string}`}
+            key={`fret-dot-${Math.ceil(fretDot.fret)}-${fretDot.string}`}
             cx={`${centeredDotPosition}%`}
             cy={`${y}%`}
-            r={`${FRET_INDICATOR_SIZE}%`}
+            r={`${FRET_DOT_SIZE}%`}
             fill="#ddd"
         />
     );
   });
+}
+
+function fretNumberLabels() {
+    const labels = [];
+    for (let i = 1; i <= FRETS; i++) {
+        const horizontalPosition = calcFretPosition(i) - calcFretGap(i) / 2;
+        labels.push(
+        <text
+            key={`fret-label-${i}`}
+            x={`${horizontalPosition}%`}
+            y={`${FRET_NUMBER_LABEL_VERTICAL_POSITION}%`}
+            fontFamily="'Josefin Sans', Arial, Helvetica, sans-serif"
+            fontWeight={800}
+            fontSize={`${FRET_NUMBER_LABEL_FONT_SIZE}%`}
+            fill="#fff"
+            textAnchor="middle"
+            alignmentBaseline="baseline"
+        >
+            {i}
+        </text>
+        );
+    }
+    return labels;
 }
 
 function noteIndicators({ displayOptions }: { displayOptions: DisplayOptions }) {
