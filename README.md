@@ -27,8 +27,10 @@ If you are developing a production application, we recommend using TypeScript wi
 - Toggleable text labels on the fretboard
 - Optional octave indication on the fretboard indicators
 - Changeable labels for the note indicator text
+- Changeable shapes or styles for the note indicators - diamond, underline, etc.
 
 ## General TODO
+- HUGE styling logic refactor - need to organize SVG generation as much as possible
 - recolor and decolor key center buttons to not confuse scale degree thinking, add options
 - make open string fretting note indicator further to left, a hollow circle instead of filled
 - add a zero fret number label above the open string note indicators

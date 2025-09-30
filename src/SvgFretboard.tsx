@@ -32,17 +32,12 @@ const NUT_START = 4.65; // percent
 const FRETBOARD_END = 99;
 
 const FRETBOARD_LENGTH = FRETBOARD_END - NUT_START; // percent
-const BASE_FRET_GAP = (44 * FRETBOARD_LENGTH) / (FRETS * (45 - FRETS));
-const LINEAR_FRET_GAP = FRETBOARD_LENGTH / FRETS; // percent
-const useLinearFrets = false; // toggle for linear vs real fret spacing
-const calcFretGap = (fretIndex: number) => useLinearFrets ? LINEAR_FRET_GAP : BASE_FRET_GAP * (1 - (fretIndex / 22))
-const calcFretPosition = (fretIndex: number) => {
-  if (useLinearFrets) {
-    return NUT_START + LINEAR_FRET_GAP * (fretIndex);
-  } else {
-    return NUT_START + BASE_FRET_GAP * (fretIndex - (fretIndex * (fretIndex - 1)) / 44);
-  }
-};
+
+const FRET_OCTAVE_SCALING_RATIO = 1.7;
+const BIGGEST_FRET_SIZE = FRETBOARD_LENGTH / (FRETS + ((FRETS * (FRETS - 1)) / 2) * ((1 - FRET_OCTAVE_SCALING_RATIO) / (11 * FRET_OCTAVE_SCALING_RATIO)));
+const FRET_SIZE_SCALING_INCREMENT = (BIGGEST_FRET_SIZE * (1 - FRET_OCTAVE_SCALING_RATIO)) / (11 * FRET_OCTAVE_SCALING_RATIO);
+const calcFretGap = (fretIndex: number) => BIGGEST_FRET_SIZE + fretIndex * FRET_SIZE_SCALING_INCREMENT;
+const calcFretPosition = (fretIndex: number) => NUT_START + fretIndex * BIGGEST_FRET_SIZE + (fretIndex * (fretIndex - 1) * FRET_SIZE_SCALING_INCREMENT) / 2;
 
 const FRET_DOT_SIZE = 1.05; // percent
 const FRET_NUMBER_LABEL_VERTICAL_POSITION = 12; // percent
