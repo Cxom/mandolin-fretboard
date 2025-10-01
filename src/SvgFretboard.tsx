@@ -23,7 +23,7 @@ const STRING_WIDTH = 0.2; // percent
 const FRET_WIDTH = 0.3; // percent
 const NUT_WIDTH = 1.1; // percent
 
-const NUT_START = 4.65; // percent
+const NUT_START = 5.85; // percent
 const FRETBOARD_END = 99;
 
 const FRETBOARD_LENGTH = FRETBOARD_END - NUT_START; // percent
@@ -31,7 +31,8 @@ const FRETBOARD_LENGTH = FRETBOARD_END - NUT_START; // percent
 const FRET_DOT_SIZE = 1.05; // percent
 const FRET_NUMBER_LABEL_VERTICAL_POSITION = 12; // percent
 
-const NOTE_INDICATOR_OFFSET = -0.5;
+const NOTE_INDICATOR_OFFSET = -0.5; // percent
+const NOTE_INDICATOR_OPEN_STRING_OFFSET_FROM_NUT = -1.3; // percent
 const NOTE_INDICATOR_SIZE = 1.5;
 const NOTE_INDICATOR_FONT_SIZE = 80;
 const FRET_NUMBER_LABEL_FONT_SIZE = 80;
@@ -228,20 +229,33 @@ function SvgFretboard() {
       let currentScaleDegree = determineScaleDegree(selectedTonic, tuningNote);
       for (let fret = 0; fret <= FRETS; fret++) {
         const degreeInfo = scaleDegrees.get(currentScaleDegree);
+        const isOpenString = fret === 0;
+        const noteIndicatorHorizontalPosition = isOpenString ? NUT_START + NOTE_INDICATOR_OPEN_STRING_OFFSET_FROM_NUT : calcFretPosition(fret) + NOTE_INDICATOR_OFFSET
         if (selectedDegrees[currentScaleDegree]) {
           indicators.push(
               <circle
                   key={`note-indicator-course-${course}-fret-${fret}`}
-                  cx={`${calcFretPosition(fret) + NOTE_INDICATOR_OFFSET}%`}
+                  cx={`${noteIndicatorHorizontalPosition}%`}
                   cy={`${VERTICAL_TOP + GAP_BETWEEN_COURSES * course}%`}
                   r={`${NOTE_INDICATOR_SIZE}%`}
                   fill={degreeInfo!.color}
               />
           );
+          if (isOpenString) {
+            indicators.push(
+                <circle
+                    key={`note-indicator-open-string-course-${course}`}
+                    cx={`${noteIndicatorHorizontalPosition}%`}
+                    cy={`${VERTICAL_TOP + GAP_BETWEEN_COURSES * course}%`}
+                    r={`${NOTE_INDICATOR_SIZE * .7}%`}
+                    fill="#00000044"
+                />
+            )
+          }
           indicators.push(
               <text
                   key={`note-indicator-course-${course}-fret-${fret}-text`}
-                  x={`${calcFretPosition(fret) + NOTE_INDICATOR_OFFSET}%`}
+                  x={`${noteIndicatorHorizontalPosition}%`}
                   y={`${VERTICAL_TOP + GAP_BETWEEN_COURSES * course + 2.95}%`}
                   fontFamily="'Josefin Sans', Arial, Helvetica, sans-serif"
                   fontWeight={800}

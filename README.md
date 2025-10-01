@@ -28,6 +28,8 @@ If you are developing a production application, we recommend using TypeScript wi
 - Optional octave indication on the fretboard indicators
 - Changeable labels for the note indicator text
 - Changeable shapes or styles for the note indicators - diamond, underline, etc.
+- A note about the importance of writing
+- Scale degree in random key quiz
 
 ## General TODO
 - HUGE styling logic refactor - need to organize SVG generation as much as possible
