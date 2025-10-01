@@ -1,6 +1,6 @@
 import React from 'react';
 import { chromaticNotes } from './constants.js';
-import {useScaleContext} from "./ScaleContext";
+import {useScaleContext} from "./contexts/ScaleContext";
 
 
 

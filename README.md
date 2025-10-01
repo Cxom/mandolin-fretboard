@@ -35,3 +35,4 @@ If you are developing a production application, we recommend using TypeScript wi
 - make open string fretting note indicator further to left, a hollow circle instead of filled
 - add a zero fret number label above the open string note indicators
 - make fret dots less visual clutter - less opacity or different shape maybe
+- figure out a formatting solution, especially for imports

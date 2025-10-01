@@ -1,7 +1,7 @@
 import React, {createContext, Dispatch, SetStateAction, useContext, useMemo, useReducer} from 'react';
-import {scaleDegrees} from './constants.js';
-import {ChromaticNote, ScaleDegree, ScaleDegreeSelection} from "./types";
-import {chromaticScaleForTonic} from "./assets/scaleUtils";
+import {scaleDegrees} from '../constants.js';
+import {ChromaticNote, ScaleDegree, ScaleDegreeSelection} from "../types";
+import {chromaticScaleForTonic} from "../assets/scaleUtils";
 
 export interface ScaleContextType {
   selectedTonic: ChromaticNote;
@@ -61,6 +61,7 @@ function scaleReducer(state: ScaleState, action: ScaleAction): ScaleState {
 
 export const ScaleContext = createContext<ScaleContextType | undefined>(undefined);
 
+// TODO this needs a better name
 export function useScaleContext() {
   const ctx = useContext(ScaleContext);
   if (!ctx) throw new Error('useScaleContext must be used within a ScaleContextProvider');
@@ -87,7 +88,7 @@ function resolveNotesForScale(selectedTonic: ChromaticNote, degreeSelection: Sca
 
     const selectedNotes: [ChromaticNote, ScaleDegree][] = degreeToSemitone
         // filter only selected degrees (those set to true in degreeSelection)
-        .filter(([degree]) => degreeSelection[degree as ScaleDegree])
+        .filter(([degree]) => degreeSelection[degree])
         .map(([degree, offset]) => [tonicChromaticScale[offset], degree]);
 
     return selectedNotes;

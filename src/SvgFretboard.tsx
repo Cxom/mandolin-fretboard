@@ -1,14 +1,9 @@
 import React from 'react';
-import {useScaleContext} from "./ScaleContext";
-import {ChromaticNote, ScaleDegree} from "./types";
+import {useScaleContext} from "./contexts/ScaleContext";
+import {ChromaticNote} from "./types";
 import {scaleDegrees} from "./constants";
 import {determineScaleDegree} from "./assets/scaleUtils";
-
-type DisplayOptions = Record<string, never>;
-
-type SvgFretboardProps = {
-  displayOptions?: DisplayOptions;
-};
+import {useDisplayOptions} from "./contexts/DisplayOptionsContext";
 
 const SVG_WIDTH = '100%';
 const SVG_HEIGHT = '100%';
@@ -49,7 +44,11 @@ const FRET_NUMBER_LABEL_FONT_SIZE = 80;
 
 // TODO pull a lot of styles out into CSS
 
-function SvgFretboard({ displayOptions = {} }: SvgFretboardProps) {
+function SvgFretboard() {
+
+  const { displayOptions: { showFretNumbers, fretScaling } } = useDisplayOptions()
+  // TODO fretScaling display option
+
   return (
     <svg
       width={SVG_WIDTH}
@@ -62,8 +61,8 @@ function SvgFretboard({ displayOptions = {} }: SvgFretboardProps) {
       {nut()}
       {frets()}
       {fretDots()}
-      {fretNumberLabels()}
-      {noteIndicators({ displayOptions })}
+      {showFretNumbers && fretNumberLabels()}
+      {noteIndicators()}
     </svg>
   );
 }
@@ -211,7 +210,7 @@ function fretNumberLabels() {
     return labels;
 }
 
-function noteIndicators({ displayOptions }: { displayOptions: DisplayOptions }) {
+function noteIndicators() {
   const indicators = [];
 
   const { selectedTonic, selectedDegrees } = useScaleContext()

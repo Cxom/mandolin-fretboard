@@ -1,6 +1,6 @@
 import React from 'react';
 import { scaleDegrees } from './constants';
-import {useScaleContext} from "./ScaleContext";
+import {useScaleContext} from "./contexts/ScaleContext";
 import {ScaleDegree} from "./types";
 
 function ScaleDegreeSelectorButtons() {

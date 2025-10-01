@@ -1,6 +1,6 @@
 import React from 'react';
 import './ScaleSelector.css';
-import { useScaleContext } from './ScaleContext';
+import { useScaleContext } from './contexts/ScaleContext.js';
 
 const scaleOptions = [
   { value: 'major', label: 'Major' },

@@ -3,17 +3,22 @@ import SvgFretboard from './SvgFretboard';
 import ScaleDegreeSelectorButtons from './ScaleDegreeSelectorButtons';
 import KeySelectorButtons from './KeySelectorButtons';
 import ScaleSelector from './ScaleSelector';
-import { ScaleContextProvider } from './ScaleContext';
+import { ScaleContextProvider } from './contexts/ScaleContext';
+import { DisplayOptionsContextProvider } from './contexts/DisplayOptionsContext';
+import DisplayOptions from './DisplayOptions';
 
 function App() {
 
   return (
-    <ScaleContextProvider>
-      <ScaleSelector />
-      <KeySelectorButtons />
-      <ScaleDegreeSelectorButtons />
-      <SvgFretboard />
-    </ScaleContextProvider>
+    <DisplayOptionsContextProvider>
+      <DisplayOptions />
+      <ScaleContextProvider>
+        <ScaleSelector />
+        <KeySelectorButtons />
+        <ScaleDegreeSelectorButtons />
+        <SvgFretboard />
+      </ScaleContextProvider>
+    </DisplayOptionsContextProvider>
   );
 }
 
