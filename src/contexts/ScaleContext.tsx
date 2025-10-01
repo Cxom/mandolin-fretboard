@@ -17,6 +17,15 @@ const scalePatterns: Record<string, string[]> = {
   major: ['1', '2', '3', '4', '5', '6', '7'],
   minor: ['1', '2', 'b3', '4', '5', 'b6', 'b7'],
   pentatonicMajor: ['1', '2', '3', '5', '6'],
+  pentatonicMinor: ['1', 'b3', '4', '5', 'b7'],
+  blues: ['1', 'b3', '4', 'b5', '5', 'b7'],
+  chromatic: ['1', 'b2', '2', 'b3', '3', '4', 'b5', '5', 'b6', '6', 'b7', '7'],
+  melodicMinor: ['1', '2', 'b3', '4', '5', '6', '7'],
+  harmonicMinor: ['1', '2', 'b3', '4', '5', 'b6', '7'],
+  dorian: ['1', '2', 'b3', '4', '5', '6', 'b7'],
+  mixolydian: ['1', '2', '3', '4', '5', '6', 'b7'],
+    // TODO enharmonic support
+  lydian: ['1', '2', '3', /*'#4',*/ 'b5', '5', '6', '7'],
 };
 
 function getScaleNameFromDegrees(degrees: Record<string, boolean>) {

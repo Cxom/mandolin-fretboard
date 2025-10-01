@@ -38,3 +38,4 @@ If you are developing a production application, we recommend using TypeScript wi
 - add a zero fret number label above the open string note indicators
 - make fret dots less visual clutter - less opacity or different shape maybe
 - figure out a formatting solution, especially for imports
+- a small line differentiating the most common scale choices from other sections (modes, minor modes, etc.). place 'custom' at the top not the bottom if possible

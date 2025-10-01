@@ -5,7 +5,15 @@ import { useScaleContext } from './contexts/ScaleContext.js';
 const scaleOptions = [
   { value: 'major', label: 'Major' },
   { value: 'minor', label: 'Minor' },
-  { value: 'pentatonicMajor', label: 'Pentatonic Major' }
+  { value: 'pentatonicMajor', label: 'Pentatonic Major' },
+  { value: 'pentatonicMinor', label: 'Pentatonic Minor' },
+  { value: 'blues', label: 'Blues' },
+  { value: 'chromatic', label: 'Chromatic' },
+  { value: 'melodicMinor', label: 'Melodic Minor'},
+  { value: 'harmonicMinor', label: 'Harmonic Minor' },
+  { value: 'dorian', label: 'Dorian' },
+  { value: 'mixolydian', label: 'Mixolydian' },
+  { value: 'lydian', label: 'Lydian' },
   // Custom is intentionally omitted from the dropdown
 ];
 
