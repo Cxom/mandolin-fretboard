@@ -1,3 +1,10 @@
+.fret-scaling-value-text {
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+  min-width: 3ch;
+  text-align: center;
+}
+
 .display-options-root {
   margin: 2em auto;
   font-family: 'Josefin Sans', Arial, Helvetica, sans-serif;
@@ -8,7 +15,7 @@
   width: fit-content;
 }
 
-.display-options-label {
+.fret-scaling-label {
   display: block;
   margin-bottom: 1em;
 }

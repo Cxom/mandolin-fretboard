@@ -7,7 +7,7 @@ export type DisplayOptions = {
 
 const defaultDisplayOptions: DisplayOptions = {
   showFretNumbers: true,
-  fretScaling: 1,
+  fretScaling: 1.7,
 };
 
 const DisplayOptionsContext = createContext<{

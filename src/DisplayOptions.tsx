@@ -16,7 +16,7 @@ const DisplayOptions: React.FC = () => {
   return (
     <div className="display-options-root">
       <h2>Display Options</h2>
-      <label className="display-options-label">
+      <label className="fret-scaling-label">
         <input
           type="checkbox"
           checked={displayOptions.showFretNumbers}
@@ -24,8 +24,8 @@ const DisplayOptions: React.FC = () => {
         />
         Show Fret Numbers
       </label>
-      <label className="display-options-label">
-        Fret Scaling: {displayOptions.fretScaling}
+      <label className="fret-scaling-label">
+        Fret Scaling: <span className="fret-scaling-value-text">{displayOptions.fretScaling}</span>
         <input
           type="range"
           min={1}
